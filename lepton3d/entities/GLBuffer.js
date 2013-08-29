@@ -42,6 +42,8 @@ L3D.GLBuffer.prototype = {
 
         this.gl.bindBuffer(this.type, this.glbuffer);
         this.gl.bufferData(this.type, this.data, this.usage);
+
+        this.dirty = false;
     },
 
     invalidateBuffer: function() {

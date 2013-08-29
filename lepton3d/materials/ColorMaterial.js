@@ -7,28 +7,40 @@ L3D.ColorMaterial = function(color) {
     L3D.BaseMaterial.call(this);
     this.uColorLocation = null;
     this.fcolor = new L3D.F32Array(3);
-    this.setColor((color!=undefined)?color:0xFFFFFF);
+    this.setColor((color!=undefined)?color:0xAAF00F);
 
     this.fScript = [
         "#ifdef GL_ES",
         "precision highp float;",
         "#endif",
         "uniform vec3 uColor;",
+        "varying vec3 vNormal;",
+        "varying vec3 vPosition;",
 
         "void main(void) {",
-            "gl_FragColor = vec4(uColor, 1.0);",
+            "vec3 lpos = vec3(0.0,0.0,1.0);",
+            "vec3 N = normalize(vNormal);",
+            "vec3 L = normalize(lpos-vPosition);",
+            "float bright = clamp(dot(N,L),0.4,1.0);",
+            "gl_FragColor = vec4(bright*uColor, 1.0);",
         "}"
     ].join("\n");
 
     this.vScript = [
         "attribute vec3 v_position;",
+        "attribute vec3 v_normal;",
+        "varying vec3 vNormal;",
+        "varying vec3 vPosition;",
 
         "uniform mat4 uMatView;",
         "uniform mat4 uMatProj;",
 
 
         "void main(void) {",
-            "gl_Position = uMatProj * uMatView * vec4(v_position, 1.0);",
+            "gl_Position = uMatProj * uMatView *  vec4(v_position, 1.0);",
+            "vPosition = (uMatView * vec4(v_position, 1.0)).xyz;",
+            "vNormal = (uMatView * vec4(v_normal, 0.0)).xyz;",
+
         "}"
     ].join("\n");
 };

@@ -146,7 +146,7 @@ L3D.BaseMaterial.prototype = {
     getArrayLocation: function(attrib) {
         var l = this.getAttribLocation(attrib);
         if(l >= 0) {
-            this.gl.enableVertexAttribArray(this.program, l);
+            this.gl.enableVertexAttribArray(l);
         }
         return l;
     },

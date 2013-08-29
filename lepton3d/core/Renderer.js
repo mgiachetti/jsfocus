@@ -47,20 +47,22 @@ L3D.Renderer = function() {
         //draw triangle
         triangle.render();
 
-        L3D.matView.translate(3.0*Math.abs(((new Date()).getTime()%4000 - 2000)/2000.0), 0.0, 0.0);
+        L3D.matView.translate(3.0*Math.abs(((new Date()).getTime()%4000 - 2000)/2000.0), 3.0, 0.0);
         //draw square
-        square.render();
+        cube.render();
     }
 
     var material;
     var triangle;
     var square;
+    var cube;
 
 
     function initMeshes(){
         material = new L3D.ColorMaterial();
         triangle = new L3D.SubMesh(null,material);
         square = new L3D.SubMesh(null,material);
+        cube = new L3D.SubMesh(new L3D.CubeGeometry(1.0,1.0,1.0),material);
 
         var vertices = [
             0.0,  1.0,  0.0,
