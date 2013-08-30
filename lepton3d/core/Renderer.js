@@ -32,7 +32,7 @@ L3D.Renderer = function() {
         _gl.clearColor(0.0, 0.0, 0.0, 1.0);
         _gl.enable(_gl.DEPTH_TEST);
 
-        window.setInterval(drawScene, 1000/30.0);
+        window.setInterval(drawScene, 1000/60.0);
     }
 
     function drawScene() {
@@ -50,19 +50,27 @@ L3D.Renderer = function() {
         L3D.matView.translate(3.0*Math.abs(((new Date()).getTime()%4000 - 2000)/2000.0), 3.0, 0.0);
         //draw square
         cube.render();
+
+        if(parser.mesh) {
+            L3D.matView.identity();
+            L3D.matView.translate(2000,-2500,-2000);
+            parser.mesh.render();
+        }
     }
 
     var material;
     var triangle;
     var square;
     var cube;
+    var parser;
 
 
     function initMeshes(){
         material = new L3D.ColorMaterial();
-        triangle = new L3D.SubMesh(null,material);
+        triangle = new L3D.SubMesh(null,new L3D.BaseMaterial());
         square = new L3D.SubMesh(null,material);
         cube = new L3D.SubMesh(new L3D.CubeGeometry(1.0,1.0,1.0),material);
+        parser = new L3D.ParserViewer();
 
         var vertices = [
             0.0,  1.0,  0.0,
