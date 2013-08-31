@@ -64,6 +64,16 @@ L3D.Vector3.prototype = {
         return this.divideScalar(this.length());
     },
 
+    transformCoordinate: function(mat) {
+        var m = mat.vec;
+        var x = this.x, y = this.y, z = this.z;
+
+        this.x = m[0]*x + m[1]*y + m[2]*z + m[3];
+        this.y = m[4]*x + m[5]*y + m[6]*z + m[7];
+        this.z = m[8]*x + m[9]*y + m[10]*z + m[11];
+        return this;
+    },
+
     min: function(v) {
         if(this.x > v.x) {
             this.x = v.x;
@@ -101,5 +111,11 @@ L3D.Vector3.prototype = {
         this.y = v.y;
         this.z = v.z;
         return this;
+    },
+
+    set: function(x,y,z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 };

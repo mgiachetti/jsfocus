@@ -18,7 +18,7 @@ L3D.ColorMaterial = function(color) {
         "varying vec3 vPosition;",
 
         "void main(void) {",
-            "vec3 lpos = vec3(0.0,0.0,1.0);",
+            "vec3 lpos = vec3(0.0,2500.0,1.0);",
             "vec3 N = normalize(vNormal);",
             "vec3 L = normalize(lpos-vPosition);",
             "float bright = clamp(dot(N,L),0.4,1.0);",

@@ -92,7 +92,7 @@ L3D.BaseMaterial.prototype = {
         geometry.indices.bindBuffer();
 
         //draw the triangle list
-        gl.drawElements(gl.TRIANGLES, geometry.indices.length, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLES, geometry.indices.length/3, gl.UNSIGNED_SHORT, 0);
 
     },
 

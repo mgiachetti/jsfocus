@@ -32,14 +32,16 @@ L3D.Renderer = function() {
         _gl.clearColor(0.0, 0.0, 0.0, 1.0);
         _gl.enable(_gl.DEPTH_TEST);
 
-        window.setInterval(drawScene, 1000/60.0);
+        requestAnimationFrame(drawScene);
     }
 
     function drawScene() {
+        //requestAnimationFrame(drawScene);
+
         _gl.viewport(0, 0, _gl.viewportWidth, _gl.viewportHeight);
         _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
 
-        L3D.matProj.perspective(45, _gl.viewportWidth / _gl.viewportHeight, 0.1, 100.0);
+        L3D.matProj.perspective(45, _gl.viewportWidth / _gl.viewportHeight, 0.1, 20000.0);
 
         L3D.matView.identity();
 
@@ -51,11 +53,12 @@ L3D.Renderer = function() {
         //draw square
         cube.render();
 
-        if(parser.mesh) {
-            L3D.matView.identity();
-            L3D.matView.translate(2000,-2500,-2000);
-            parser.mesh.render();
+        L3D.matView.identity();
+        L3D.matView.translate(-1500,-1500,-5000);
+        for(var i = 0; i < parser.escena.length; i++) {
+            parser.escena[i].render();
         }
+        requestAnimationFrame(drawScene);
     }
 
     var material;
