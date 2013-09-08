@@ -7,7 +7,7 @@ L3D.ColorMaterial = function(color) {
     L3D.BaseMaterial.call(this);
     this.uColorLocation = null;
     this.fcolor = new L3D.F32Array(3);
-    this.setColor((color!=undefined)?color:0xAAF00F);
+    this.setColor((color!=undefined)?color:0xFFFFFF*Math.random());
 
     this.fScript = [
         "#ifdef GL_ES",

@@ -54,7 +54,7 @@ L3D.Renderer = function() {
         cube.render();
 
         L3D.matView.identity();
-        L3D.matView.translate(-1500,-1500,-5000);
+        L3D.matView.translate(-1500,-1500,-3500);
         for(var i = 0; i < parser.escena.length; i++) {
             parser.escena[i].render();
         }
