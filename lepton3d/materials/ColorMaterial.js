@@ -47,6 +47,8 @@ L3D.ColorMaterial = function(color) {
 
 L3D.ColorMaterial.prototype = Object.create(L3D.BaseMaterial.prototype);
 
+L3D.ColorMaterial.prototype.constructor = L3D.ColorMaterial;
+
 L3D.ColorMaterial.prototype.bindExtended = function() {
     if(!this.uColorLocation) {
         this.uColorLocation = this.getUniformLocation("uColor");

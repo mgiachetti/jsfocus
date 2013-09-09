@@ -44,6 +44,8 @@ L3D.BaseMaterial = function() {
 };
 
 L3D.BaseMaterial.prototype = {
+		constructor: L3D.BaseMaterial,
+		
     render: function(geometry) {
         var gl = this.gl;
 
@@ -109,20 +111,27 @@ L3D.BaseMaterial.prototype = {
         if(this.program) {
             return;
         }
+        if(this.constructor.__program != undefined) {
+        		this.program = this.constructor.__program;
+				} else {
 
-        var gl = this.gl;
-
-        this.vShader = this.buildShader(this.vScript, gl.VERTEX_SHADER);
-        this.fShader = this.buildShader(this.fScript, gl.FRAGMENT_SHADER);
-
-        this.program = gl.createProgram();
-        gl.attachShader(this.program, this.vShader);
-        gl.attachShader(this.program, this.fShader);
-        gl.linkProgram(this.program);
-
-        if(!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
-            alert("No se pudieron inicializar los shaders");
-        }
+	        var gl = this.gl;
+	
+	        this.vShader = this.buildShader(this.vScript, gl.VERTEX_SHADER);
+	        this.fShader = this.buildShader(this.fScript, gl.FRAGMENT_SHADER);
+	
+	        this.program = gl.createProgram();
+	        gl.attachShader(this.program, this.vShader);
+	        gl.attachShader(this.program, this.fShader);
+	        gl.linkProgram(this.program);
+	
+	        if(!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+	            alert("No se pudieron inicializar los shaders");
+	        }
+	        
+	        //Save the program in a static variable
+        	this.constructor.__program = this.program;
+      	}
 
         this.verticesLocation = this.getArrayLocation("v_position");
         this.uvsLocation = this.getArrayLocation("v_uv");
@@ -133,6 +142,8 @@ L3D.BaseMaterial.prototype = {
         this.uMatWorldLocation = this.getUniformLocation("uMatWorld");
         this.uMatViewLocation = this.getUniformLocation("uMatView");
         this.uMatProjLocation = this.getUniformLocation("uMatProj");
+        
+        
     },
 
     getAttribLocation: function(attrib) {
